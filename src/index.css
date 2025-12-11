@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 
 :root {
@@ -21,3 +18,7 @@
   --green-300: #89e780;
   --amber-300: #ffc97c;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
