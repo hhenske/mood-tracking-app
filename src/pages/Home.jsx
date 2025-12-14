@@ -74,7 +74,7 @@ export default function Home() {
 
             {/* Right Chart */}
                 <div className="bg-white rounded-lg p-6">
-                    <MoodTrendsChart />
+                    <MoodTrendsChart moodEntries={moodData.moodEntries} />
                 </div>
             </div>
         </div>
