@@ -48,10 +48,11 @@ export default function Home() {
 
         {/* Charts Section */}
         <div className="px-6 max-w-7xl mx-auto">
-            <div className="grid grid-cols-[1fr,2fr] gap-4">
+            <div className="grid grid-cols-[1fr,3fr] gap-4 items-stretch min-h-[360px]">
 
             {/* Left - Mood Cards */}
-            <div className="bg-neutral0 rounded-lg p-4 shadow-sm">
+            <div className="bg-neutral0 rounded-lg px-4 py-12 shadow-sm h-full flex flex-col justify-between">
+            <div className="mb-2">
             <MoodCard 
                 type="mood" 
                 hasData={true}  // Change to false to see "Keep tracking!" version
@@ -61,6 +62,8 @@ export default function Home() {
                 comparison: "Same as the previous 5 check-ins"
                 }}
             />
+            </div>
+            <div className="mt-2">
             <MoodCard 
                 type="sleep" 
                 hasData={true}  // Change to false to see "Not enough data yet!" version
@@ -70,6 +73,7 @@ export default function Home() {
                 comparison: "Increase from the previous 5 check-ins"
                 }}
             />
+            </div>
             </div>
 
             {/* Right Chart */}
