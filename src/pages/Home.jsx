@@ -2,7 +2,8 @@ import '../index.css';
 import App from '../App.jsx';
 import Header from '../components/layout/Header.jsx';
 import MoodCard from '../components/mood/MoodCard.jsx';
-
+import MoodTrendsChart from '../components/charts/MoodTrendsChart'
+import moodData from '../data/data.json'
 
 
 export default function Home() {
@@ -50,7 +51,7 @@ export default function Home() {
             <div className="grid grid-cols-[1fr,2fr] gap-4">
 
             {/* Left - Mood Cards */}
-            <div className="space-y-4">
+            <div className="bg-neutral0 rounded-lg p-4 shadow-sm">
             <MoodCard 
                 type="mood" 
                 hasData={true}  // Change to false to see "Keep tracking!" version
@@ -73,8 +74,7 @@ export default function Home() {
 
             {/* Right Chart */}
                 <div className="bg-white rounded-lg p-6">
-                    <h2 className="text-xl font-semibold mb-4">Chart 2</h2>
-                {/* Chart component goes here */}
+                    <MoodTrendsChart />
                 </div>
             </div>
         </div>

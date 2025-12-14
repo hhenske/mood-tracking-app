@@ -15,13 +15,13 @@ export default function MoodCard({ type, hasData, data }) {
   // Empty state
   if (!hasData) {
     return (
-      <div className="bg-neutral0 rounded-lg p-4 shadow-sm">
-        <h3 className="text-sm font-semibold text-neutral6 mb-3">
+      <div>
+        <h3 className="text-sm font-semibold text-neutral6 mb-2">
           Average {type === 'mood' ? 'Mood' : 'Sleep'}
           <span className="ml-1 text-xs font-normal">(Last 5 Check-ins)</span>
         </h3>
 
-        <div className="bg-neutral2 rounded-lg p-4">
+        <div className="bg-neutral2 rounded-lg p-4 mb-6">
           <p className="text-sm font-semibold text-neutral9 mb-1">
             {emptyStates[type].title}
           </p>
@@ -39,13 +39,13 @@ export default function MoodCard({ type, hasData, data }) {
   const helperTextColor = type === 'mood' ? 'text-' : 'text-blue1';
 
   return (
-    <div className="bg-neutral0 rounded-lg p-4 shadow-sm">
-      <h3 className="text-sm font-semibold text-neutral6 mb-3">
+    <div>
+      <h3 className="text-sm font-semibold text-neutral6 mb-2">
         Average {type === 'mood' ? 'Mood' : 'Sleep'}
         <span className="ml-1 text-xs font-normal">(Last 5 Check-ins)</span>
       </h3>
 
-      <div className={`${bgColor} rounded-lg p-4`}>
+      <div className={`${bgColor} rounded-lg p-4 mb-4`}>
         <div className="flex items-center gap-2 mb-2">
           {type === 'mood' && <MoodIcon mood={data.value} />}
           {type === 'sleep' && <span className="text-xl text-neutral0">💤</span>}
