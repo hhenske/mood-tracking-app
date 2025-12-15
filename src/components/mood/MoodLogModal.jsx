@@ -7,7 +7,7 @@ import iconSad from '../../assets/images/icon-sad-color.svg'
 import iconVerySad from '../../assets/images/icon-very-sad-color.svg'
 
 
-export default function MoodLogModal({isOpen, onClose}) { 
+export default function MoodLogModal({isOpen, onClose, onSubmit}) { 
     const [step, setStep] = useState(1);
     const [selectedMood, setSelectedMood] = useState(null);
     const [selectedFeelings, setSelectedFeelings] = useState([]);
@@ -61,8 +61,10 @@ export default function MoodLogModal({isOpen, onClose}) {
             sleepHours,
             createdAt: new Date().toISOString()      
         };
+
+        onSubmit(moodLog);
+
         console.log("Mood Log Submitted:", moodLog);
-        onClose();
         setStep(1);
         setSelectedMood(null);
         setSelectedFeelings([]);

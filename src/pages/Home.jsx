@@ -6,12 +6,23 @@ import MoodCard from '../components/mood/MoodCard.jsx';
 import MoodTrendsChart from '../components/charts/MoodTrendsChart'
 import moodData from '../data/data.json'
 import MoodLogModal from '../components/mood/MoodLogModal.jsx';
+import TodayMoodSummary from '../components/mood/TodayMoodSummary.jsx';
 
 
 export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [todayMood, setTodayMood] = useState(null);
     const userName= "Sarah";
 
+
+  const mockTodayMood = {
+      mood: 1, // Happy
+      feelings: ["Joyful", "Motivated"],
+      journalEntry: "Had a great day at the park with friends!",
+      sleepHours: 7.5,
+      createdAt: new Date().toISOString()
+    };
+      
   // Get current date formatted
   const getCurrentDate = () => {
     const date = new Date();
@@ -29,6 +40,7 @@ export default function Home() {
         default: return 'th';
       }
     };
+
     
     // Replace the day number with day + suffix
     return formatted.replace(day.toString(), `${day}${suffix(day)}`);
@@ -49,6 +61,8 @@ export default function Home() {
           Log Today's Mood
             </button>
         </div>
+
+        <TodayMoodSummary mood={mockTodayMood} />
 
         {/* Charts Section */}
         <div className="px-6 max-w-7xl mx-auto">
@@ -87,7 +101,14 @@ export default function Home() {
             </div>
         </div>
             {/* Modal */}
-      <MoodLogModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <MoodLogModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={(moodLog) => {
+          setTodayMood(moodLog);
+          setIsModalOpen(false);
+        }}
+        />
     </div>
   );
 }
