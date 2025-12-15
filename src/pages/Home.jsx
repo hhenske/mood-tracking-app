@@ -1,13 +1,15 @@
+import { useState } from React;
 import '../index.css';
 import App from '../App.jsx';
 import Header from '../components/layout/Header.jsx';
 import MoodCard from '../components/mood/MoodCard.jsx';
 import MoodTrendsChart from '../components/charts/MoodTrendsChart'
 import moodData from '../data/data.json'
+import MoodLogModal from '../data/data.json'
 
 
 export default function Home() {
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const userName= "Sarah";
 
   // Get current date formatted
@@ -41,9 +43,11 @@ export default function Home() {
             <h3 className="text-md font-bold text-blue6 mb-6">Hello, {userName}!</h3>
             <h1 className="text-5xl font-bold text-neutral9 mb-4">How are you feeling today?</h1>
             <p className="text-sm text-neutral6 text-center max-w-xl">{getCurrentDate()}</p>
-            <button className="bg-blue6 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue7 transition-colors mt-14">
+            <button onClick={() => setIsModalOpen(true)}
+                className="bg-blue6 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue7 transition-colors mt-14"
+                >
           Log Today's Mood
-        </button>
+            </button>
         </div>
 
         {/* Charts Section */}
@@ -82,6 +86,8 @@ export default function Home() {
                 </div>
             </div>
         </div>
+            {/* Modal */}
+      <MoodLogModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
