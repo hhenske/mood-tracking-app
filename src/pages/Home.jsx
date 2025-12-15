@@ -1,11 +1,11 @@
-import { useState } from React;
+import { useState } from 'react';
 import '../index.css';
 import App from '../App.jsx';
 import Header from '../components/layout/Header.jsx';
 import MoodCard from '../components/mood/MoodCard.jsx';
 import MoodTrendsChart from '../components/charts/MoodTrendsChart'
 import moodData from '../data/data.json'
-import MoodLogModal from '../data/data.json'
+import MoodLogModal from '../components/mood/MoodLogModal.jsx';
 
 
 export default function Home() {

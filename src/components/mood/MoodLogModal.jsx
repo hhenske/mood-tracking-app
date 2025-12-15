@@ -9,7 +9,7 @@ import iconVerySad from '../../assets/images/icon-very-sad-color.svg'
 
 export default function MoodLogModal({isOpen, onClose}) { 
     const [step, setStep] = useState(1);
-    const [selectMood, setSelectedMood] = useState(null);
+    const [selectedMood, setSelectedMood] = useState(null);
     const [selectedFeelings, setSelectedFeelings] = useState([]);
     const [journalEntry, setJournalEntry] = useState("");
     const [sleepHours, setSleepHours] = useState(null);
@@ -17,11 +17,11 @@ export default function MoodLogModal({isOpen, onClose}) {
     const maxCharacters = 500;
 
     const moods = [
-        { value: 2, label: 'Very Happy'}
-        { value: 1, label: 'Happy'}
-        { value: 0, label: 'Neutral'}
-        { value: -1, label: 'Sad'}
-        { value: -2, label: 'Very Sad'}
+        { value: 2, label: 'Very Happy', icon: iconVeryHappy },
+        { value: 1, label: 'Happy', icon: iconHappy },
+        { value: 0, label: 'Neutral', icon: iconNeutral },
+        { value: -1, label: 'Sad', icon: iconSad },
+        { value: -2, label: 'Very Sad', icon: iconVerySad }
     ];
 
     const feelings = [
@@ -38,24 +38,14 @@ export default function MoodLogModal({isOpen, onClose}) {
         { value: 9, label: '9+ hours'}
     ];
 
-    const getMoodIcon = (value) => {
-   
-    const icons = {
-      2: '../../assets/images/icon-very-happy-color.svg',
-      1: '../../assets/images/icon-happy-color.svg',
-      0: '../../assets/images/icon-neutral-color.svg',
-      '-1': '../../assets/images/icon-sad-color.svg',
-      '-2': '../../assets/images/icon-very-sad-color.svg'
-    };
-        return icons[value];
-
+    
     const handleFeelingToggle = (feeling) => {
     if (selectedFeelings.includes(feeling)) {
       setSelectedFeelings(selectedFeelings.filter(f => f !== feeling));
     } else if (selectedFeelings.length < 3) 
         setSelectedFeelings([...selectedFeelings, feeling]); 
     };
-  };
+
 
     const handleContinue = () => { 
         if (step < 4) {
@@ -65,7 +55,7 @@ export default function MoodLogModal({isOpen, onClose}) {
 
     const handleSubmit = () => { 
         const moodLog = {
-            mood: selectMood,
+            mood: selectedMood,
             feelings: selectedFeelings,
             journalEntry,
             sleepHours,
@@ -82,23 +72,17 @@ export default function MoodLogModal({isOpen, onClose}) {
 
 
     const canContinue = () => { 
-        if (step === 1) return selectMood !== null;
+        if (step === 1) return selectedMood !== null;
         if (step === 2) return selectedFeelings.length > 0;
         if (step === 3) return true; 
         if (step === 4) return sleepHours !== null;
         return false;
     };
 
-    if (!isOpen) return null;
+        if (!isOpen) return null;
 
 
-    const handleJournalChange = (e) => {
-        if (e.target.value.length <= maxCharacters) {
-            setJournalEntry(e.target.value);
-        }
-    };
-
-    return (
+        return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-5 w-full max-w-md mx-4">
                 {/* Header */}
@@ -121,5 +105,143 @@ export default function MoodLogModal({isOpen, onClose}) {
                 </div>
                    
                 {/* Step 1: Mood Selection */}
+        {step === 1 && (
+          <div>
+            <p className="text-lg text-neutral9 mb-6">How was your mood today?</p>
+            <div className="space-y-3 mb-6">
+              {moods.map((mood) => (
+                <label
+                  key={mood.value}
+                  className="flex items-center justify-between bg-white border-2 border-neutral2 rounded-lg p-4 cursor-pointer hover:border-blue6 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="mood"
+                      value={mood.value}
+                      checked={selectedMood === mood.value}
+                      onChange={() => setSelectedMood(mood.value)}
+                      className="w-5 h-5 text-blue6"
+                    />
+                    <span className="text-lg font-medium text-neutral9">{mood.label}</span>
                 </div>
-    };
+            <img src={mood.icon} alt={mood.label} className="w-8 h-8" />
+        </label>
+              ))}
+            </div>
+            <button
+              onClick={handleContinue}
+              disabled={!canContinue()}
+              className={`w-full py-3 rounded-lg text-white font-semibold ${
+                canContinue()
+                  ? 'bg-blue6 hover:bg-blue7'
+                  : 'bg-neutral3 cursor-not-allowed'
+              }`}
+            >
+              Continue
+            </button>
+          </div>
+        )}
+
+        {/* Step 2: Feelings */}
+        {step === 2 && ( 
+            <div>
+            <p className="text-lg text-neutral9 mb-2">How did you feel?</p>
+            <p className="text-sm text-neutral6 mb-6">Select up to 3 tags:</p>
+            <div className="flex flex-wrap gap-2 mb-6">
+                {feelings.map((feeling) => (
+                    <label
+                    key={feeling}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 cursor-pointer transition-colors ${
+                    selectedFeelings.includes(feeling)
+                      ? 'opacity-50 cursor-not-allowed'
+                      : ''
+                  }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedFeelings.includes(feeling)}
+                      onChange={() => handleFeelingToggle(feeling)}
+                      disabled={selectedFeelings.length >= 3 && !selectedFeelings.includes(feeling) && selectedFeelings.length >= 3}
+                      className="w-4 h-4 text-blue6"
+                    />
+                     <span className="text-sm text-neutral9">{feeling}</span>
+                    </label>
+                ))}
+            
+            </div>
+            <button
+              onClick={handleContinue}
+              disabled={!canContinue()}
+              className={`w-full py-3 rounded-lg text-white font-semibold ${
+                canContinue()
+                  ? 'bg-blue6 hover:bg-blue7'
+                  : 'bg-neutral3 cursor-not-allowed'
+                }`}
+            >
+              Continue
+            </button>
+          </div>    
+        )}
+
+         {/* Step 3: Journal Entry */}
+        {step === 3 && (
+          <div>
+            <p className="text-lg text-neutral9 mb-6">Write about your day...</p>
+            <textarea
+              value={journalEntry}
+              onChange={(e) => setJournalEntry(e.target.value.slice(0, maxCharacters))}
+              placeholder="Share your thoughts (optional)"
+              className="w-full h-40 p-4 border-2 border-neutral2 rounded-lg resize-none focus:border-blue6 focus:outline-none mb-2"
+            />
+            <p className="text-sm text-neutral6 text-right mb-6">
+              {journalEntry.length}/{maxCharacters}
+            </p>
+            <button
+              onClick={handleContinue}
+              className="w-full py-3 rounded-lg text-white font-semibold bg-blue6 hover:bg-blue7"
+            >
+              Continue
+            </button>
+          </div>
+        )}
+
+        {/* Step 4: Sleep Hours */}
+        {step === 4 && (
+          <div>
+            <p className="text-lg text-neutral9 mb-6">How many hours did you sleep last night?</p>
+            <div className="space-y-3 mb-6">
+              {sleepOptions.map((option) => (
+                <label
+                  key={option.value}
+                  className="flex items-center bg-white border-2 border-neutral2 rounded-lg p-4 cursor-pointer hover:border-blue6 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="sleep"
+                    value={option.value}
+                    checked={sleepHours === option.value}
+                    onChange={() => setSleepHours(option.value)}
+                    className="w-5 h-5 text-blue6 mr-3"
+                  />
+                  <span className="text-lg font-medium text-neutral9">{option.label}</span>
+                </label>
+              ))}
+            </div>
+            <button
+              onClick={handleSubmit}
+              disabled={!canContinue()}
+              className={`w-full py-3 rounded-lg text-white font-semibold ${
+                canContinue()
+                  ? 'bg-blue6 hover:bg-blue7'
+                  : 'bg-neutral3 cursor-not-allowed'
+              }`}
+            >
+              Submit
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
