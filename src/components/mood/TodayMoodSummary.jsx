@@ -87,7 +87,7 @@ export default function TodayMoodSummary({ mood }) {
       </div>
       <div>
         
-        <p className="text-xs text-neutral7 font-medium max-w-xs mt-2">
+        <p className="text-xs text-neutral7 font-semibold max-w-xs mt-2">
             {mood.journalEntry}
         </p>
 

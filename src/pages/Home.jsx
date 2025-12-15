@@ -66,7 +66,7 @@ export default function Home() {
 
         {/* Charts Section */}
         <div className="px-6 max-w-7xl mx-auto">
-            <div className="grid grid-cols-[1fr,3fr] gap-4 items-stretch min-h-[360px]">
+            <div className="grid grid-cols-[3fr,5fr] gap-4 items-stretch min-h-[360px]">
 
             {/* Left - Mood Cards */}
             <div className="bg-neutral0 rounded-lg px-4 py-12 shadow-sm h-full flex flex-col justify-between">

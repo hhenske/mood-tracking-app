@@ -15,7 +15,7 @@ export default function MoodTrendsChart({ moodEntries }) {
       const monthDay = `${date.toLocaleString('en-US', { month: 'short' })} ${date.getDate().toString().padStart(2, '0')}`;
       
       return {
-        date: monthDay,
+        date: date,
         sleep: entry.sleepHours,
         mood: entry.mood
       };
@@ -42,7 +42,36 @@ export default function MoodTrendsChart({ moodEntries }) {
   }
 };
 
-    const sleepTicks = [1, 3.5, 5.5, 7.5, 9.5];
+    const DateTick = ({ x, y, payload }) => { 
+        const date = payload.value;
+
+        const month = date.toLocaleString('en-US', { month: 'long' });
+        const day = date.getDate();
+        
+        return (
+            <g transform={`translate(${x}, ${y + 10})`}>
+                <text 
+                    x={-8}
+                    textAnchor="right"
+                    fontSize={9}
+                    fill="#6B7280"
+                > 
+                    {month}
+                </text>
+                <text 
+                    y={14}
+                    textAnchor="left"
+                    fontSize={10}
+                    fontWeight="600"
+                    fill="#111827"
+                >
+                    {day}
+                </text>
+            </g>
+        );
+    };
+
+    const sleepTicks = [1, 2.5, 4, 5.5, 7];
 
     const SleepTick = ({ x, y, payload }) => {
         let label = '';
@@ -55,7 +84,7 @@ export default function MoodTrendsChart({ moodEntries }) {
 
         // Anchor the label to the container's left padding (slightly nudged)
         // nudge closer to the bars so there's less empty space
-        const leftAlign = 30; // nudged a bit to move labels right
+        const leftAlign = 15; // nudged a bit to move labels right
         const offset = leftAlign - x;
 
         return (
@@ -63,17 +92,18 @@ export default function MoodTrendsChart({ moodEntries }) {
             <image
                 href={zzIcon}
                 x={offset - 14}
-                y={-7}
-                width={12}
-                height={12}
+                y={-6}
+                width={10}
+                height={10}
                 opacity={0.6}
             />
             <text
                 x={offset}
                 y={4}
-                fontSize={12}
+                fontSize={10}
                 fill="#6B7280"
                 textAnchor="start"
+                transform="scale(0.9, 1)"
             >
                 {label}
             </text>
@@ -128,13 +158,17 @@ export default function MoodTrendsChart({ moodEntries }) {
     <div className="bg-white rounded-lg p-6">
       <h2 className="text-xl font-semibold mb-0 text-neutral9">Mood and sleep trends</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={chartData} margin={{ top: 28, right: 8, left: 56, bottom: 0 }} barCategoryGap={'2%'} barGap={1}>
+        <BarChart data={chartData} margin={{ top: 20, right: 1, left: 1, bottom: 0 }} barCategoryGap={'2%'} barGap={1}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.15} />
-          <XAxis 
-            dataKey="date" 
-            tick={{ fontSize: 12, fill: '#6B7280' }}
+          <XAxis
+            dataKey="date"
+            tick={<DateTick />}
+            interval={0}              // ⬅️ forces ALL labels
             axisLine={{ stroke: '#E5E7EB' }}
+            tickLine={false}
+            height={40}
           />
+
           <YAxis
             type="number"
             domain={[0, 10]}
