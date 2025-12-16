@@ -1,9 +1,9 @@
 import logo from "../../assets/images/logo.svg";
-import emptyAvatar from "../../assets/images/avatar-empty.svg";
+import emptyAvatar from "../../assets/images/avatar-placeholder.svg";
 
 
 export default function ProfileCard({ 
-    variant = "onboarding",
+    variant = "edit",
     onClose,
     avatar
  }) {
@@ -20,7 +20,7 @@ export default function ProfileCard({
             />
 
             {/* White Card */}
-            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-lg">
+            <div className="relative w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
 
                 {/* Close button (edit only) */}
                 {isEdit && (
@@ -31,13 +31,13 @@ export default function ProfileCard({
                 )}
 
                 {/* Title */}
-                <h2 className="text-3xl font-bold text-neutral9 mb-2">
-                    {isEdit ? "Updata your profile" 
+                <h2 className="text-2xl font-bold text-neutral9 mb-2">
+                    {isEdit ? "Update your profile" 
                     : "Personalize your experience"}
                 </h2>
 
                 {/* Subtitle */}
-                <p className="text-md text-neutral6 mb-6">
+                <p className="text-sm text-neutral6 mb-6">
                     {isEdit 
                         ? "Personalize your account with your name and photo." 
                         : "Add your name and a profile picture to make Mood yours."}
@@ -47,18 +47,18 @@ export default function ProfileCard({
 
                     {/* Name*/}
                     <div>
-                        <label className="block text-md font-medium text-neutral9 mb-1">
+                        <label className="block text-sm font-medium text-neutral9 mb-1">
                             Name
                         </label>
                         <input
                             type="text"
                             placeholder="Jane Appleseed"
-                            className="w-full border border-neutral3 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue6"
+                            className="w-full border border-neutral3 rounded-lg px-4 py-1 focus:outline-none focus:ring-2 focus:ring-blue6"
                         />
                     </div>
 
                    {/* Avatar Upload */}
-                   <div className="flex items-center gap-4 border border-neutral3 rounded-lg p-4">
+                   <div className="flex items-center gap-4 p-4">
                         
                          {/* Avatar */}
                         <img
@@ -70,15 +70,15 @@ export default function ProfileCard({
 
                     {/* Upload Info */}
                     <div className="flex-1">
-                            <p className="text-md font-medium text-neutral9">
+                            <p className="text-sm font-medium text-neutral9">
                                 Upload Image
                             </p>
-                            <p className="text-sm text-neutral6 mb-2">
+                            <p className="text-xs font-light text-neutral6 mb-2">
                                 Max 250kb, PNG or JPEG
                             </p>
                             <button
                                 type="button"
-                                className="text-sm px-4 py-1.5 rounded-lg border border-blue6 text-blue6 hover:bg-blue1 transition"
+                                className="text-sm px-3 py-1 rounded-lg border border-neutral9 text-neutral9 hover:bg-blue1 transition"
                                 >
                                 Upload
                             </button>
@@ -88,7 +88,7 @@ export default function ProfileCard({
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-blue6 text-lg text-white py-2 rounded-lg hover:bg-blue7 transition-colors mt-4"
+                    className="w-full bg-blue6 text-md text-white py-2 rounded-lg hover:bg-blue7 transition-colors mt-4"
                     >
                         {isEdit ? "Save changes" : "Start tracking"}            
                     </button>
