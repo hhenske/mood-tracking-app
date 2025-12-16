@@ -7,6 +7,7 @@ import MoodTrendsChart from '../components/charts/MoodTrendsChart'
 import moodData from '../data/data.json'
 import MoodLogModal from '../components/mood/MoodLogModal.jsx';
 import TodayMoodSummary from '../components/mood/TodayMoodSummary.jsx';
+import AuthCard from '../components/auth/AuthCard.jsx';
 
 
 export default function Home() {
@@ -48,6 +49,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-main text-neutral9 p-6">
+      <AuthCard />
       <Header />
 
        {/* Welcome Message */}

@@ -1,4 +1,4 @@
-
+import moodData from '../../data/data.json';
 import iconNeutral from '../../assets/images/icon-neutral-color.svg'
 import iconHappy from '../../assets/images/icon-happy-color.svg'
 import iconVeryHappy from '../../assets/images/icon-very-happy-color.svg'
@@ -25,6 +25,14 @@ export default function TodayMoodSummary({ mood }) {
   if (!moodMeta) return null;
 
 
+  const getRandomQuote = (moodValue) => {
+    const quotes = moodData.moodQuotes[moodValue.toString()];
+    if (!quotes || quotes.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
+  };
+
+
   return (
     <section className="p-4 mb-6 max-w-6xl mx-auto flex gap-6">
 
@@ -39,13 +47,20 @@ export default function TodayMoodSummary({ mood }) {
 
       {mood.journalEntry && (
         <div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21.75 12C22.9688 12 24 13.0313 24 14.25V20.25C24 21.5156 22.9688 22.5 21.75 22.5H15.75C14.4844 22.5 13.5 21.5156 13.5 20.25V9C13.5 4.875 16.8281 1.5 21 1.5H21.375C21.9844 1.5 22.5 2.01562 22.5 2.625V4.875C22.5 5.53125 21.9844 6 21.375 6H21C19.3125 6 18 7.35938 18 9V12H21.75ZM8.25 12C9.46875 12 10.5 13.0313 10.5 14.25V20.25C10.5 21.5156 9.46875 22.5 8.25 22.5H2.25C0.984375 22.5 0 21.5156 0 20.25V9C0 4.875 3.32813 1.5 7.5 1.5H7.875C8.48438 1.5 9 2.01562 9 2.625V4.875C9 5.53125 8.48438 6 7.875 6H7.5C5.8125 6 4.5 7.35938 4.5 9V12H8.25Z" fill="#4865DB"/>
-          </svg>
+          {(() => {
+            const quote = getRandomQuote(mood.mood);
+            return quote ? (
+              <div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.75 12C22.9688 12 24 13.0313 24 14.25V20.25C24 21.5156 22.9688 22.5 21.75 22.5H15.75C14.4844 22.5 13.5 21.5156 13.5 20.25V9C13.5 4.875 16.8281 1.5 21 1.5H21.375C21.9844 1.5 22.5 2.01562 22.5 2.625V4.875C22.5 5.53125 21.9844 6 21.375 6H21C19.3125 6 18 7.35938 18 9V12H21.75ZM8.25 12C9.46875 12 10.5 13.0313 10.5 14.25V20.25C10.5 21.5156 9.46875 22.5 8.25 22.5H2.25C0.984375 22.5 0 21.5156 0 20.25V9C0 4.875 3.32813 1.5 7.5 1.5H7.875C8.48438 1.5 9 2.01562 9 2.625V4.875C9 5.53125 8.48438 6 7.875 6H7.5C5.8125 6 4.5 7.35938 4.5 9V12H8.25Z" fill="#4865DB"/>
+                </svg>
 
-          <blockquote className="text-xs text-neutral7 font-medium italic max-w-xs mt-4">
-            {mood.journalEntry}
-          </blockquote>
+                <blockquote className="text-xs text-neutral7 font-medium italic max-w-xs mt-4">
+                  {quote}
+                </blockquote>
+              </div>
+            ) : null;
+          })()}
           
         </div>
       )}
