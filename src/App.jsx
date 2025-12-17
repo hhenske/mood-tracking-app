@@ -8,6 +8,16 @@ import ProfileCard from './components/onboarding/ProfileCard';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
+  const [showProfileCard, setShowProfileCard] = useState(false);
+
+  const currentScreen = !isAuthenticated
+  ? "auth"
+  : needsOnboarding
+  ? "onboarding"
+  : showProfileCard
+  ? "profile-edit"
+  : "home";
+
 
   const handleAuthSuccess = (mode) => {
     setIsAuthenticated(true);
@@ -27,24 +37,37 @@ function App() {
 
 
   return (
-    <>
-      {!isAuthenticated && (
-        <AuthPage onAuthSuccess={handleAuthSuccess} />
-      )}
+  <>
+    {currentScreen === "auth" && (
+      <AuthPage onAuthSuccess={handleAuthSuccess} />
+    )}
 
-      {isAuthenticated && needsOnboarding && (
+    {currentScreen === "onboarding" && (
       <ProfileCard
         variant="onboarding"
-        onClose={() => setNeedsOnboarding(false)}
+        onClose={handleOnboardingComplete}
       />
     )}
 
-    {isAuthenticated && !needsOnboarding && (
-      <Home />
+    {currentScreen === "profile-edit" && (
+      <ProfileCard
+        variant="edit"
+        onClose={() => setShowProfileCard(false)}
+      />
+    )}
+
+    {currentScreen === "home" && (
+      <Home
+        onOpenProfile={() => {
+          setProfileVariant("edit");
+          setShowProfileCard(true);
+        }}
+      />
     )}
   </>
 );
 
 }
 
-export default App
+
+export default App;
