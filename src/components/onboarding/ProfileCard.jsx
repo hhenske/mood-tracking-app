@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import logo from "../../assets/images/logo.svg";
 import emptyAvatar from "../../assets/images/avatar-placeholder.svg";
 
@@ -5,10 +6,24 @@ import emptyAvatar from "../../assets/images/avatar-placeholder.svg";
 export default function ProfileCard({ 
     variant = "onboarding",
     onClose,
+    onSubmit,
     avatar
  }) {
     const isEdit = variant === "edit";
     const isOnboarding = variant === "onboarding";
+
+    const [name, setName] = useState('');
+    const [profilePic, setProfilePic] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const submitProfile = (e) => {
+        e.preventDefault();
+        // Call optional onSubmit prop with the collected data
+        onSubmit?.({ name, profilePic });
+        // Close the onboarding/profile card if a closer is provided
+        onClose?.();
+    }; 
+
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-neutral1 px-4">
@@ -44,7 +59,7 @@ export default function ProfileCard({
                         : "Add your name and a profile picture to make Mood yours."}
                 </p>
 
-                <form className="space-y-4">
+                <form onSubmit={submitProfile} className="space-y-4">
 
                     {/* Name*/}
                     <div>
@@ -53,6 +68,8 @@ export default function ProfileCard({
                         </label>
                         <input
                             type="text"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
                             placeholder="Jane Appleseed"
                             className="w-full border border-neutral3 rounded-lg px-4 py-1 focus:outline-none focus:ring-2 focus:ring-blue6"
                         />
@@ -63,7 +80,7 @@ export default function ProfileCard({
                         
                          {/* Avatar */}
                         <img
-                            src={avatar || emptyAvatar}
+                            src={profilePic || avatar || emptyAvatar}
                             alt="Profile avatar"
                             className="w-14 h-14 rounded-full object-cover"
                         />
@@ -80,9 +97,22 @@ export default function ProfileCard({
                             <button
                                 type="button"
                                 className="text-sm px-3 py-1 rounded-lg border border-neutral9 text-neutral9 hover:bg-blue1 transition"
+                                onClick={() => fileInputRef.current?.click()}
                                 >
                                 Upload
                             </button>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                className="hidden"
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        setProfilePic(URL.createObjectURL(file));
+                                    }
+                                }}
+                            />
                     </div>
                 </div>
 
@@ -90,7 +120,7 @@ export default function ProfileCard({
                 <button
                     type="submit"
                     className="w-full bg-blue6 text-md text-white py-2 rounded-lg hover:bg-blue7 transition-colors mt-4"
-                    >
+                   >
                         {isEdit ? "Save changes" : "Start tracking"}            
                     </button>
 
