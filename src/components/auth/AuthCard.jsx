@@ -1,7 +1,19 @@
 import logo from '../../assets/images/logo.svg';
+import { useState } from 'react';
 
-export default function AuthCard({ mode = "signup" }) {
-    const isLogin = mode === "signup";
+export default function AuthCard({ mode, onSubmit, onToggleMode }) {
+    const isLogin = mode === "login";
+
+    
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSubmit?.({ email, password });
+    };
+
+
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-neutral1 px-4">
@@ -28,7 +40,7 @@ export default function AuthCard({ mode = "signup" }) {
                         : "Join to track your daily mood and sleep with ease."}
                 </p>
 
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
 
                     {/* Email */}
                     <div>
@@ -38,6 +50,7 @@ export default function AuthCard({ mode = "signup" }) {
                             id="email" 
                             className="w-full border border-neutral3 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue6" 
                             placeholder="name@mail.com"
+                            onChange={e => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -48,7 +61,8 @@ export default function AuthCard({ mode = "signup" }) {
                                 type="password"
                                 id="password"
                                 className="w-full border border-neutral3 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue6 mb-3"
-                            />
+                                onChange={e => setPassword(e.target.value)}
+                        />
                     </div>
 
                     {/* Button */}
@@ -56,7 +70,7 @@ export default function AuthCard({ mode = "signup" }) {
                         type="submit"
                         className="w-full bg-blue6 text-lg text-white py-2 rounded-lg hover:bg-blue7 transition-colors mt-4"
                     >
-                        {isLogin ? "Sign up" : "Log in"}            
+                        {isLogin ? "Log in" : "Sign up"}            
                     </button>
 
                 </form>
@@ -64,7 +78,11 @@ export default function AuthCard({ mode = "signup" }) {
                 {/* Footer */}
                 <p className="text-md text-neutral6 text-center mt-6">
                     {isLogin ? "Haven't got an account?" : "Already got an account?"}{" "}
-                    <button className="text-blue3 font-medium hover:underline">
+                    <button 
+                        className="text-blue3 font-medium hover:underline"
+                        type="button"
+                        onClick={onToggleMode}
+                        >
                         {isLogin ? "Sign up" : "Log in"}
                     </button>
                 </p>

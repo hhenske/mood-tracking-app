@@ -3,11 +3,12 @@ import emptyAvatar from "../../assets/images/avatar-placeholder.svg";
 
 
 export default function ProfileCard({ 
-    variant = "edit",
+    variant = "onboarding",
     onClose,
     avatar
  }) {
     const isEdit = variant === "edit";
+    const isOnboarding = variant === "onboarding";
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-neutral1 px-4">
