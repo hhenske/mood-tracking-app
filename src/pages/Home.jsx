@@ -66,7 +66,11 @@ export default function Home() {
             </button>
         </div>
 
-        <TodayMoodSummary mood={mockTodayMood} />
+
+        {todayMood && (
+          <TodayMoodSummary mood={todayMood} />
+        )}
+        
 
         {/* Charts Section */}
         <div className="px-6 max-w-7xl mx-auto">
