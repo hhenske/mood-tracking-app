@@ -10,7 +10,7 @@ import TodayMoodSummary from '../components/mood/TodayMoodSummary.jsx';
 import ProfileCard from '../components/onboarding/ProfileCard.jsx';
 
 
-export default function Home() {
+export default function Home({ onOpenProfile, onLogout }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [todayMood, setTodayMood] = useState(null);
     const userName= "Sarah";
@@ -56,7 +56,10 @@ export default function Home() {
       
       {/* ProfileCard is rendered by App during onboarding; removed from Home to avoid duplicate rendering */}
 
-      <Header />
+      <Header 
+        onOpenProfile={onOpenProfile}
+        onLogout={onLogout}
+      />
 
        {/* Welcome Message */}
         <div className="flex flex-col items-center justify-center px-6 py-20">
@@ -112,6 +115,7 @@ export default function Home() {
                 </div>
             </div>
         </div>
+           
             {/* Modal */}
       <MoodLogModal 
         isOpen={isModalOpen} 
@@ -122,6 +126,7 @@ export default function Home() {
           setIsModalOpen(false);
         }}
         />
+
     </div>
   );
 }
