@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../index.css';
 import App from '../App.jsx';
 import Header from '../components/layout/Header.jsx';
@@ -14,6 +14,10 @@ export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [todayMood, setTodayMood] = useState(null);
     const userName= "Sarah";
+
+    useEffect(() => {
+      console.log('Home: todayMood changed:', todayMood);
+    }, [todayMood]);
 
 
   const mockTodayMood = {
@@ -113,6 +117,7 @@ export default function Home() {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}
         onSubmit={(moodLog) => {
+          console.log('Home onSubmit received:', moodLog);
           setTodayMood(moodLog);
           setIsModalOpen(false);
         }}

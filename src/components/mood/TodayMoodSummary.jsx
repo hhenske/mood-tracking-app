@@ -18,6 +18,7 @@ const moodConfig = {
 };
 
 export default function TodayMoodSummary({ mood }) {
+  console.log('TodayMoodSummary render:', mood);
   if (!mood) return null;
 
   const date = new Date(mood.createdAt);
