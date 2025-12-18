@@ -10,23 +10,15 @@ import TodayMoodSummary from '../components/mood/TodayMoodSummary.jsx';
 import ProfileCard from '../components/onboarding/ProfileCard.jsx';
 
 
-export default function Home({ onOpenProfile, onLogout }) {
+export default function Home({ user, onOpenProfile, onLogout }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [todayMood, setTodayMood] = useState(null);
-    const userName= "Sarah";
+  
 
     useEffect(() => {
       console.log('Home: todayMood changed:', todayMood);
     }, [todayMood]);
 
-
-  const mockTodayMood = {
-      mood: 1, // Happy
-      feelings: ["Joyful", "Motivated"],
-      journalEntry: "Had a great day at the park with friends!",
-      sleepHours: 7.5,
-      createdAt: new Date().toISOString()
-    };
       
   // Get current date formatted
   const getCurrentDate = () => {
@@ -63,14 +55,17 @@ export default function Home({ onOpenProfile, onLogout }) {
 
        {/* Welcome Message */}
         <div className="flex flex-col items-center justify-center px-6 py-20">
-            <h3 className="text-md font-bold text-blue6 mb-6">Hello, {userName}!</h3>
+            <h3 className="text-md font-bold text-blue6 mb-6">Hello, {user?.name ?? 'there'}!</h3>
             <h1 className="text-5xl font-bold text-neutral9 mb-4">How are you feeling today?</h1>
             <p className="text-sm text-neutral6 text-center max-w-xl">{getCurrentDate()}</p>
-            <button onClick={() => setIsModalOpen(true)}
-                className="bg-blue6 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue7 transition-colors mt-14"
-                >
-          Log Today's Mood
-            </button>
+            
+            {!todayMood && (
+              <button onClick={() => setIsModalOpen(true)}
+                  className="bg-blue6 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue7 transition-colors mt-14"
+                  >
+            Log Today's Mood
+              </button>
+            )}
         </div>
 
 
