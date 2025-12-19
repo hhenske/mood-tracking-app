@@ -8,130 +8,120 @@ import zzIcon from '../../assets/images/icon-sleep.svg';
 
 
 export default function MoodTrendsChart({ moodEntries }) {
-  // Transform the data for the chart
+  const isMobile = window.innerWidth < 640;
+
+
+// Transform the data for the chart
   const transformData = (entries) => {
     return entries.map(entry => {
       const date = new Date(entry.createdAt);
-      const monthDay = `${date.toLocaleString('en-US', { month: 'short' })} ${date.getDate().toString().padStart(2, '0')}`;
-      
       return {
-        date: date,
+        date,
         sleep: entry.sleepHours,
         mood: entry.mood
       };
     });
-  };
+    };
+  const visibleBars = isMobile ? 4 : 11;
+  const chartData = transformData(moodEntries).slice(-visibleBars);
 
-  const chartData = transformData(moodEntries).slice(-11); // Last 11 entries
 
+
+  
   // Custom colors based on mood value
   const getMoodColor = (mood) => {
-  switch (mood) {
-    case 2: // very good (amber)
-      return 'hsl(38, 90%, 70%)';
-    case 1: // good (green)
-      return 'hsl(135, 65%, 70%)';
-    case 0: // neutral (purple)
-      return 'hsl(255, 70%, 78%)';
-    case -1: // bad (blue)
-      return 'hsl(210, 80%, 70%)';
-    case -2: // very bad (red)
-      return 'hsl(0, 80%, 72%)';
-    default:
-      return 'hsl(255, 70%, 78%)';
-  }
-};
+    switch (mood) {
+      case 2: return 'hsl(38, 90%, 70%)';
+      case 1: return 'hsl(135, 65%, 70%)';
+      case 0: return 'hsl(255, 70%, 78%)';
+      case -1: return 'hsl(210, 80%, 70%)';
+      case -2: return 'hsl(0, 80%, 72%)';
+      default: return 'hsl(255, 70%, 78%)';
+    }
+  };
 
-    const DateTick = ({ x, y, payload }) => { 
-        const date = payload.value;
+  /* ---------- Axis Ticks ---------- */
 
-        const month = date.toLocaleString('en-US', { month: 'long' });
-        const day = date.getDate();
-        
-        return (
-            <g transform={`translate(${x}, ${y + 10})`}>
-                <text 
-                    x={-8}
-                    textAnchor="right"
-                    fontSize={9}
-                    fill="#6B7280"
-                > 
-                    {month}
-                </text>
-                <text 
-                    y={14}
-                    textAnchor="left"
-                    fontSize={10}
-                    fontWeight="600"
-                    fill="#111827"
-                >
-                    {day}
-                </text>
-            </g>
-        );
-    };
+  const DateTick = ({ x, y, payload }) => {
+    const date = payload.value;
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const day = date.getDate();
 
-    const sleepTicks = [1, 2.5, 4, 5.5, 7];
+    return (
+      <g transform={`translate(${x}, ${y + 10})`}>
+        <text
+          x={-8}
+          textAnchor="right"
+          fontSize={isMobile ? 8 : 9}
+          fill="#6B7280"
+        >
+          {month}
+        </text>
+        <text
+          y={14}
+          textAnchor="left"
+          fontSize={isMobile ? 9 : 10}
+          fontWeight="600"
+          fill="#111827"
+        >
+          {day}
+        </text>
+      </g>
+    );
+  };
 
-    const SleepTick = ({ x, y, payload }) => {
-        let label = '';
+  const SleepTick = ({ x, y, payload }) => {
+  let label = '';
 
-        if (payload.value < 2) label = '0–2 hours';
-        else if (payload.value < 5) label = '3–4 hours';
-        else if (payload.value < 7) label = '5–6 hours';
-        else if (payload.value < 9) label = '7–8 hours';
-        else label = '9+ hours';
+  if (payload.value < 2) label = '0–2 hours';
+  else if (payload.value < 5) label = '3–4 hours';
+  else if (payload.value < 7) label = '5–6 hours';
+  else if (payload.value < 9) label = '7–8 hours';
+  else label = '9+ hours';
 
-        // Anchor the label to the container's left padding (slightly nudged)
-        // nudge closer to the bars so there's less empty space
-        const leftAlign = 15; // nudged a bit to move labels right
-        const offset = leftAlign - x;
+    return (
+      <g transform={`translate(${x}, ${y})`}>
+        <image
+          href={zzIcon}
+          x={-18}
+          y={-6}
+          width={isMobile ? 8 : 10}
+          height={isMobile ? 8 : 10}
+          opacity={0.6}
+        />
+        <text
+          x={-4}
+          y={4}
+          fontSize={isMobile ? 9 : 10}
+          fill="#6B7280"
+          textAnchor="start"
+          transform="scale(0.9, 1)"
+        >
+          {label}
+        </text>
+      </g>
+    );
+  };
 
-        return (
-            <g transform={`translate(${x}, ${y})`}>
-            <image
-                href={zzIcon}
-                x={offset - 14}
-                y={-6}
-                width={10}
-                height={10}
-                opacity={0.6}
-            />
-            <text
-                x={offset}
-                y={4}
-                fontSize={10}
-                fill="#6B7280"
-                textAnchor="start"
-                transform="scale(0.9, 1)"
-            >
-                {label}
-            </text>
-            </g>
-        );
-    };
+  /* ---------- Bar Shape ---------- */
 
-    // Get mood icon
   const getMoodIcon = (mood) => {
-    if (mood === 2) return iconVeryHappy;  // Great
-    if (mood === 1) return iconHappy;       // Good
-    if (mood === 0) return iconNeutral;     // Neutral
-    if (mood === -1) return iconSad;        // Bad
-    if (mood === -2) return iconVerySad;    // Terrible
+    if (mood === 2) return iconVeryHappy;
+    if (mood === 1) return iconHappy;
+    if (mood === 0) return iconNeutral;
+    if (mood === -1) return iconSad;
+    if (mood === -2) return iconVerySad;
     return iconNeutral;
   };
 
-
- // Custom shape for rounded bars with icons
   const RoundedBar = (props) => {
     const { fill, x, y, width, height, payload } = props;
-    const radius = width /2;
-    const iconSize = 24;
+    const radius = width / 2;
+    const iconSize = isMobile ? 18 : 24;
     const iconSrc = getMoodIcon(payload.mood);
 
     return (
       <g>
-        {/* Rounded rectangle bar */}
         <rect
           x={x}
           y={y}
@@ -141,7 +131,6 @@ export default function MoodTrendsChart({ moodEntries }) {
           rx={radius}
           ry={radius}
         />
-        {/* Mood icon (image) centered above the bar */}
         <image
           href={iconSrc}
           x={x + (width - iconSize) / 2}
@@ -154,16 +143,31 @@ export default function MoodTrendsChart({ moodEntries }) {
     );
   };
 
+  /* ---------- Render ---------- */
+
   return (
-    <div className="bg-white rounded-lg p-6">
-      <h2 className="text-xl font-semibold mb-0 text-neutral9">Mood and sleep trends</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={chartData} margin={{ top: 20, right: 1, left: 1, bottom: 0 }} barCategoryGap={'2%'} barGap={1}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.15} />
+    <div className="bg-white rounded-lg p-4 lg:p-6">
+      <h2 className="text-lg lg:text-xl font-semibold mb-0 text-neutral9">
+        Mood and sleep trends
+      </h2>
+
+      <ResponsiveContainer width="100%" height={isMobile ? 260 : 300}>
+        <BarChart
+          data={chartData}
+          margin={{ top: 20, right: 4, left: 4, bottom: 0 }}
+          barCategoryGap="4%"
+          barGap={2}
+        >
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#E5E7EB"
+            opacity={0.15}
+          />
+
           <XAxis
             dataKey="date"
             tick={<DateTick />}
-            interval={0}              // ⬅️ forces ALL labels
+            interval={isMobile ? 1 : 0}
             axisLine={{ stroke: '#E5E7EB' }}
             tickLine={false}
             height={40}
@@ -172,20 +176,29 @@ export default function MoodTrendsChart({ moodEntries }) {
           <YAxis
             type="number"
             domain={[0, 10]}
-            ticks={sleepTicks}
+            ticks={[1, 2.5, 4, 5.5, 7]}
             tick={<SleepTick />}
             axisLine={false}
             tickLine={false}
-            width={80}
+            width={isMobile ? 44 : 56}
           />
-          <Tooltip 
-            contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '8px' }}
-            formatter={(value, name) => {
-              if (name === 'sleep') return [`${value} hours`, 'Sleep'];
-              return value;
+
+          <Tooltip
+            contentStyle={{
+              backgroundColor: '#fff',
+              border: '1px solid #E5E7EB',
+              borderRadius: '8px'
             }}
+            formatter={(value, name) =>
+              name === 'sleep' ? [`${value} hours`, 'Sleep'] : value
+            }
           />
-          <Bar dataKey="sleep" shape={<RoundedBar />} barSize={34}>
+
+          <Bar
+            dataKey="sleep"
+            shape={<RoundedBar />}
+            barSize={isMobile ? 22 : 34}
+          >
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getMoodColor(entry.mood)} />
             ))}

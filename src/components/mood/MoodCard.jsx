@@ -16,16 +16,16 @@ export default function MoodCard({ type, hasData, data }) {
   if (!hasData) {
     return (
       <div>
-        <h3 className="text-sm font-semibold text-neutral6 mb-2">
+        <h3 className="ext-xs lg:text-sm font-semibold text-neutral6 mb-2">
           Average {type === 'mood' ? 'Mood' : 'Sleep'}
-          <span className="ml-1 text-xs font-normal">(Last 5 Check-ins)</span>
+          <span className="ml-1 text-[10px] lg:text-xs font-normal">(Last 5 Check-ins)</span>
         </h3>
 
-        <div className="bg-neutral2 rounded-lg p-4 mb-6">
-          <p className="text-sm font-semibold text-neutral9 mb-1">
+        <div className="bg-neutral2 rounded-lg p-3 lg:p-4 mb-4 lg:mb-6">
+          <p className="text-sm lg:text-base font-semibold text-neutral9 mb-1">
             {emptyStates[type].title}
           </p>
-          <p className="text-sm text-neutral6">
+          <p className="text-xs lg:text-sm text-neutral6">
             {emptyStates[type].subtitle}
           </p>
         </div>
@@ -40,22 +40,33 @@ export default function MoodCard({ type, hasData, data }) {
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-neutral6 mb-2">
+      <h3 className="text-xs lg:text-sm font-semibold text-neutral6 mb-2">
         Average {type === 'mood' ? 'Mood' : 'Sleep'}
-        <span className="ml-1 text-xs font-normal">(Last 5 Check-ins)</span>
+        <span className="mml-1 text-[10px] lg:text-xs font-normal">
+          (Last 5 Check-ins)
+          </span>
       </h3>
 
-      <div className={`${bgColor} rounded-lg p-4 mb-4`}>
+      <div className={`${bgColor} rounded-lg p-3 lg:p-4 mb-4`}>
+        {/* Value row */}
         <div className="flex items-center gap-2 mb-2">
-          {type === 'mood' && <MoodIcon mood={data.value} />}
-          {type === 'sleep' && <span className="text-xl text-neutral0">💤</span>}
+          {type === 'mood' && (
+            <div className="scale-90 lg:scale-100">
+              <MoodIcon mood={data.value} />
+            </div>
+          )}
 
-          <p className={`text-lg font-semibold ${valueTextColor}`}>
+          {type === 'sleep' && (
+            <span className="text-lg lg:text-xl text-neutral0">💤</span>
+          )}
+
+          <p className={`text-base lg:text-lg font-semibold ${valueTextColor}`}>
             {type === 'mood' ? data.value : data.hours}
           </p>
         </div>
 
-        <div className={`flex items-center gap-1 text-sm ${helperTextColor}`}>
+        {/* Trend */}
+        <div className={`flex items-center gap-1 text-xs lg:text-sm ${helperTextColor}`}>
           <span>
             {data.trend === 'same' ? '→' : data.trend === 'increase' ? '↗' : '↘'}
           </span>
