@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './index.css'
 import Home from './pages/Home';
 import AuthPage from './pages/AuthPage';
@@ -8,6 +8,8 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
   const [showProfileCard, setShowProfileCard] = useState(false);
+  const [todayMood, setTodayMood] = useState(null);
+  const [moodEntries, setMoodEntries] = useState([]);
   // NOTE: Don't call state setters like `setUser(...)` directly during render.
   // Calling a state setter unconditionally in the component body causes an
   // immediate state update and triggers a re-render loop (Too many re-renders).
@@ -16,6 +18,18 @@ function App() {
     name: "Sarah",
     email: "sarah@mail.com"
   });
+
+  useEffect(() => {
+    const todayKey = new Date().toISOString().split("T")[0];
+
+    const moodForToday =
+      moodEntries.find(m =>
+        // guard missing createdAt and use correct method name
+        m?.createdAt?.startsWith(todayKey)
+      ) ?? null;
+
+    setTodayMood(moodForToday);
+  }, [moodEntries]);
 
   const currentScreen = !isAuthenticated
     ? "auth"
@@ -37,6 +51,9 @@ function App() {
     }
   };
 
+  const handleMoodSubmit = (moodLog) => {
+    setMoodEntries(prev => [...prev, moodLog]);
+  };
 
   const handleOnboardingComplete = () => {
     setNeedsOnboarding(false);
@@ -77,6 +94,8 @@ function App() {
           user={user}
           onOpenProfile={() => setShowProfileCard(true)}
           onLogout={handleLogout}
+          todayMood={todayMood}
+          onSubmitMood={handleMoodSubmit}
         />
       )}
     </>

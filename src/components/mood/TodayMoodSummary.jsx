@@ -35,14 +35,14 @@ export default function TodayMoodSummary({ mood }) {
 
 
   return (
-    <section className="p-4 mb-6 max-w-6xl mx-auto flex gap-6">
+    <section className="p-4 mb-4 lg:mb-6 max-w-6xl mx-auto flex flex-col lg:flex-row gap-4 lg:gap-6">
 
   {/* Left Column */}
-  <div className="flex-[1.3] bg-white rounded-xl p-6 grid grid-cols-[1fr_auto] items-center">
+  <div className="flex-[1.3] bg-white rounded-xl p-4 lg:p-6 grid grid-cols-[1fr_auto] items-center gap-4">
     
     <div>
-      <p className="text-lg text-neutral6 font-semibold mb-1">I'm feeling</p>
-      <p className="text-3xl font-bold mb-10">
+      <p className="text-base lg:text-lg text-neutral6 font-semibold mb-1">I'm feeling</p>
+      <p className="text-2xl lg:text-3xl font-bold mb-6 lg:mb-10">
         {moodMeta.label}
       </p>
 
@@ -52,11 +52,11 @@ export default function TodayMoodSummary({ mood }) {
             const quote = getRandomQuote(mood.mood);
             return quote ? (
               <div>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="lg:w-4 lg:h-4">
                   <path d="M21.75 12C22.9688 12 24 13.0313 24 14.25V20.25C24 21.5156 22.9688 22.5 21.75 22.5H15.75C14.4844 22.5 13.5 21.5156 13.5 20.25V9C13.5 4.875 16.8281 1.5 21 1.5H21.375C21.9844 1.5 22.5 2.01562 22.5 2.625V4.875C22.5 5.53125 21.9844 6 21.375 6H21C19.3125 6 18 7.35938 18 9V12H21.75ZM8.25 12C9.46875 12 10.5 13.0313 10.5 14.25V20.25C10.5 21.5156 9.46875 22.5 8.25 22.5H2.25C0.984375 22.5 0 21.5156 0 20.25V9C0 4.875 3.32813 1.5 7.5 1.5H7.875C8.48438 1.5 9 2.01562 9 2.625V4.875C9 5.53125 8.48438 6 7.875 6H7.5C5.8125 6 4.5 7.35938 4.5 9V12H8.25Z" fill="#4865DB"/>
                 </svg>
 
-                <blockquote className="text-xs text-neutral7 font-medium italic max-w-xs mt-4">
+                <blockquote className="text-xs lg:text-sm text-neutral7 font-medium italic max-w-xs mt-2 lg:mt-4">
                   {quote}
                 </blockquote>
               </div>
@@ -70,35 +70,35 @@ export default function TodayMoodSummary({ mood }) {
     <img
       src={moodMeta.icon}
       alt={moodMeta.label}
-      className="w-44 h-44 ml-8"
+      className="w-24 h-24 lg:w-44 lg:h-44 ml-4 lg:ml-8"
     />
   </div>
 
   {/* Right Column */}
-  <div className="flex-[1] flex flex-col gap-5">
+  <div className="flex-[1] flex flex-col gap-4 lg:gap-5">
 
-    <div className="bg-white rounded-xl p-4">
+    <div className="bg-white rounded-xl p-3 lg:p-4">
       <div className="flex items-center gap-2 mb-2">
         <img
           src={iconSleep}
           alt=""
           className="w-3 h-3"
         />
-        <p className="text-sm text-neutral6">Sleep</p>
+        <p className="text-xs lg:text-sm text-neutral6">Sleep</p>
       </div>
-      <p className="text-2xl font-bold">
+      <p className="text-xl lg:text-2xl font-bold">
         {mood.sleepHours} hours
       </p>
     </div>
 
-    <div className="bg-white rounded-xl p-4">
+    <div className="bg-white rounded-xl p-3 lg:p-4">
       <div className="flex items-center gap-2 mb-2">
         <img
           src={iconReflection}
           alt=""
           className="w-3 h-3"
         />
-        <p className="text-sm text-neutral6">
+        <p className="text-xs lg:text-sm text-neutral6">
           Reflection of the day</p>
       </div>
       <div>
@@ -110,7 +110,7 @@ export default function TodayMoodSummary({ mood }) {
         
       </div>
 
-      <div className="flex flex-wrap gap-2 text-xs text-neutral6 mt-10">
+      <div className="flex flex-wrap gap-2 text-xs text-neutral6 mt-6 lg:mt-10">
         {mood.feelings.map(feeling => (
           <span
             key={feeling}
