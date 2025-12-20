@@ -20,63 +20,67 @@ export default function AuthCard({ mode, onSubmit, onToggleMode }) {
         
             {/* Logo */}
             <img 
-                src={logo} 
-                alt="Mood Tracker Logo" 
-                className="w-25 h-25 mx-auto mb-12" 
+            src={logo} 
+            alt="Mood Tracker Logo" 
+            className="w-20 h-20 md:w-25 md:h-25 mx-auto mb-8 md:mb-12" 
             />
 
             {/* White Card */}
-            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-lg">
+            <div className="w-full max-w-md rounded-2xl bg-white p-5 md:p-6 shadow-lg">
 
-                {/* Title */}
-                <h2 className="text-3xl font-bold text-neutral9 mb-2">
-                    {isLogin ? "Welcome back!" : "Create an account"}
-                </h2>
+            {/* Title */}
+            <h2 className="text-2xl md:text-3xl font-bold text-neutral9 mb-2">
+                {isLogin ? "Welcome back!" : "Create an account"}
+            </h2>
 
-                {/* Subtitle */}
-                <p className="text-md text-neutral6 mb-6">
-                    {isLogin 
-                        ? "Log in to continue tracking your daily mood and sleep." 
-                        : "Join to track your daily mood and sleep with ease."}
-                </p>
+            {/* Subtitle */}
+            <p className="text-sm md:text-md text-neutral6 mb-5 md:mb-6">
+                {isLogin 
+                ? "Log in to continue tracking your daily mood and sleep." 
+                : "Join to track your daily mood and sleep with ease."}
+            </p>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
 
-                    {/* Email */}
-                    <div>
-                        <label className="block text-md font-medium text-neutral9 mb-1" htmlFor="email">Email address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            className="w-full border border-neutral3 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue6" 
-                            placeholder="name@mail.com"
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                    </div>
+                {/* Email */}
+                <div>
+                <label className="block text-sm md:text-md font-medium text-neutral9 mb-1" htmlFor="email">
+                    Email address
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    className="w-full text-sm md:text-base border border-neutral3 rounded-lg px-3 md:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue6" 
+                    placeholder="name@mail.com"
+                    onChange={e => setEmail(e.target.value)}
+                />
+                </div>
 
                     {/* Password */}
                     <div>
-                        <label className="block text-md font-medium text-neutral9 mb-1" htmlFor="password">Password</label>
-                            <input 
-                                type="password"
-                                id="password"
-                                className="w-full border border-neutral3 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue6 mb-3"
-                                onChange={e => setPassword(e.target.value)}
-                        />
+                    <label className="block text-sm md:text-md font-medium text-neutral9 mb-1" htmlFor="password">
+                        Password
+                    </label>
+                    <input 
+                        type="password"
+                        id="password"
+                        className="w-full text-sm md:text-base border border-neutral3 rounded-lg px-3 md:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue6 mb-2 md:mb-3"
+                        onChange={e => setPassword(e.target.value)}
+                    />
                     </div>
 
                     {/* Button */}
                     <button
-                        type="submit"
-                        className="w-full bg-blue6 text-lg text-white py-2 rounded-lg hover:bg-blue7 transition-colors mt-4"
+                    type="submit"
+                    className="w-full bg-blue6 text-base md:text-lg text-white py-2 md:py-2.5 rounded-lg hover:bg-blue7 transition-colors mt-3 md:mt-4"
                     >
-                        {isLogin ? "Log in" : "Sign up"}            
+                    {isLogin ? "Log in" : "Sign up"}            
                     </button>
 
                 </form>
                     
                 {/* Footer */}
-                <p className="text-md text-neutral6 text-center mt-6">
+                <p className="text-sm md:text-md text-neutral6 text-center mt-5 md:mt-6">
                     {isLogin ? "Haven't got an account?" : "Already got an account?"}{" "}
                     <button 
                         className="text-blue3 font-medium hover:underline"
@@ -86,7 +90,7 @@ export default function AuthCard({ mode, onSubmit, onToggleMode }) {
                         {isLogin ? "Sign up" : "Log in"}
                     </button>
                 </p>
-                
+      
             </div>
         </div>
     );

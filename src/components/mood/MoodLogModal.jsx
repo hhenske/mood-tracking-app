@@ -14,7 +14,7 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
     const [journalEntry, setJournalEntry] = useState("");
     const [sleepHours, setSleepHours] = useState(null);
 
-    const maxCharacters = 500;
+    const maxCharacters = 150;
 
     const moods = [
         { value: 2, label: 'Very Happy', icon: iconVeryHappy },
@@ -85,17 +85,17 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
 
 
         return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-5 w-full max-w-md mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-4 md:p-5 w-full max-w-md mx-4">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-neutral9">Log your mood</h2>
+                <div className="flex justify-between items-center mb-4 md:mb-6">
+                    <h2 className="text-xl md:text-2xl font-bold text-neutral9">Log your mood</h2>
                 <button onClick={onClose} className="text-neutral6 hover:text-neutral9 text-2xl">
                 X</button>
                 </div>
             
                 {/* Progress Bar */}
-                <div className="flex gap-2 mb-6">
+                <div className="flex gap-2 mb-4 md:mb-6">
                 {[1, 2, 3, 4].map((s) => (
                     <div
                     key={s}
@@ -109,32 +109,32 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
                 {/* Step 1: Mood Selection */}
         {step === 1 && (
           <div>
-            <p className="text-lg text-neutral9 mb-6">How was your mood today?</p>
-            <div className="space-y-3 mb-6">
+            <p className="text-base md:text-lg text-neutral9 mb-4 md:mb-6">How was your mood today?</p>
+            <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
               {moods.map((mood) => (
                 <label
                   key={mood.value}
-                  className="flex items-center justify-between bg-white border-2 border-neutral2 rounded-lg p-4 cursor-pointer hover:border-blue6 transition-colors"
+                  className="flex items-center justify-between bg-white border-2 border-neutral2 rounded-lg p-3 md:p-4 cursor-pointer hover:border-blue6 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 md:gap-3">
                     <input
                       type="radio"
                       name="mood"
                       value={mood.value}
                       checked={selectedMood === mood.value}
                       onChange={() => setSelectedMood(mood.value)}
-                      className="w-5 h-5 text-blue6"
+                      className="ww-4 h-4 md:w-5 md:h-5 text-blue6"
                     />
-                    <span className="text-lg font-medium text-neutral9">{mood.label}</span>
+                    <span className="text-base md:text-lg font-medium text-neutral9">{mood.label}</span>
                 </div>
-            <img src={mood.icon} alt={mood.label} className="w-8 h-8" />
+            <img src={mood.icon} alt={mood.label} className="w-7 h-7 md:w-8 md:h-8" />
         </label>
               ))}
             </div>
             <button
               onClick={handleContinue}
               disabled={!canContinue()}
-              className={`w-full py-3 rounded-lg text-white font-semibold ${
+              className={`w-full py-2.5 md:py-3 rounded-lg text-white font-semibold text-base ${
                 canContinue()
                   ? 'bg-blue6 hover:bg-blue7'
                   : 'bg-neutral3 cursor-not-allowed'
@@ -148,13 +148,13 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
         {/* Step 2: Feelings */}
         {step === 2 && ( 
             <div>
-            <p className="text-lg text-neutral9 mb-2">How did you feel?</p>
-            <p className="text-sm text-neutral6 mb-6">Select up to 3 tags:</p>
-            <div className="flex flex-wrap gap-2 mb-6">
+            <p className="text-base md:text-lg text-neutral9 mb-2">How did you feel?</p>
+            <p className="text-xs md:text-sm text-neutral6 mb-4 md:mb-6">Select up to 3 tags:</p>
+            <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
                 {feelings.map((feeling) => (
                     <label
                     key={feeling}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 cursor-pointer transition-colors ${
+                    className={`flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg border-2 cursor-pointer transition-colors ${
                     selectedFeelings.includes(feeling)
                       ? 'opacity-50 cursor-not-allowed'
                       : ''
@@ -165,9 +165,9 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
                       checked={selectedFeelings.includes(feeling)}
                       onChange={() => handleFeelingToggle(feeling)}
                       disabled={selectedFeelings.length >= 3 && !selectedFeelings.includes(feeling) && selectedFeelings.length >= 3}
-                      className="w-4 h-4 text-blue6"
+                      className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue6"
                     />
-                     <span className="text-sm text-neutral9">{feeling}</span>
+                     <span className="text-xs md:text-sm text-neutral9">{feeling}</span>
                     </label>
                 ))}
             
@@ -175,7 +175,7 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
             <button
               onClick={handleContinue}
               disabled={!canContinue()}
-              className={`w-full py-3 rounded-lg text-white font-semibold ${
+              className={`w-full py-2.5 md:py-3 rounded-lg text-white font-semibold text-base ${
                 canContinue()
                   ? 'bg-blue6 hover:bg-blue7'
                   : 'bg-neutral3 cursor-not-allowed'
@@ -189,19 +189,19 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
          {/* Step 3: Journal Entry */}
         {step === 3 && (
           <div>
-            <p className="text-lg text-neutral9 mb-6">Write about your day...</p>
+            <p className="text-base md:text-lg text-neutral9 mb-4 md:mb-6">Write about your day...</p>
             <textarea
               value={journalEntry}
               onChange={(e) => setJournalEntry(e.target.value.slice(0, maxCharacters))}
               placeholder="Share your thoughts (optional)"
-              className="w-full h-40 p-4 border-2 border-neutral2 rounded-lg resize-none focus:border-blue6 focus:outline-none mb-2"
+              className="w-full h-32 md:h-40 p-3 md:p-4 text-sm md:text-base border-2 border-neutral2 rounded-lg resize-none focus:border-blue6 focus:outline-none mb-2"
             />
-            <p className="text-sm text-neutral6 text-right mb-6">
+            <p className="text-xs md:text-sm text-neutral6 text-right mb-4 md:mb-6">
               {journalEntry.length}/{maxCharacters}
             </p>
             <button
               onClick={handleContinue}
-              className="w-full py-3 rounded-lg text-white font-semibold bg-blue6 hover:bg-blue7"
+              className="w-full py-2.5 md:py-3 rounded-lg text-white font-semibold text-base bg-blue6 hover:bg-blue7"
             >
               Continue
             </button>
@@ -211,12 +211,12 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
         {/* Step 4: Sleep Hours */}
         {step === 4 && (
           <div>
-            <p className="text-lg text-neutral9 mb-6">How many hours did you sleep last night?</p>
-            <div className="space-y-3 mb-6">
+            <p className="text-base md:text-lg text-neutral9 mb-4 md:mb-6">How many hours did you sleep last night?</p>
+            <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
               {sleepOptions.map((option) => (
                 <label
                   key={option.value}
-                  className="flex items-center bg-white border-2 border-neutral2 rounded-lg p-4 cursor-pointer hover:border-blue6 transition-colors"
+                  className="flex items-center bg-white border-2 border-neutral2 rounded-lg p-3 md:p-4 cursor-pointer hover:border-blue6 transition-colors"
                 >
                   <input
                     type="radio"
@@ -224,16 +224,16 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
                     value={option.value}
                     checked={sleepHours === option.value}
                     onChange={() => setSleepHours(option.value)}
-                    className="w-5 h-5 text-blue6 mr-3"
+                    className="w-4 h-4 md:w-5 md:h-5 text-blue6 mr-2 md:mr-3"
                   />
-                  <span className="text-lg font-medium text-neutral9">{option.label}</span>
+                  <span className="text-base md:text-lg font-medium text-neutral9">{option.label}</span>
                 </label>
               ))}
             </div>
             <button
               onClick={handleSubmit}
               disabled={!canContinue()}
-              className={`w-full py-3 rounded-lg text-white font-semibold ${
+              className={`w-full py-2.5 md:py-3 rounded-lg text-white font-semibold text-base ${
                 canContinue()
                   ? 'bg-blue6 hover:bg-blue7'
                   : 'bg-neutral3 cursor-not-allowed'

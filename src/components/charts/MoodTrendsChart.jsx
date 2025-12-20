@@ -83,14 +83,14 @@ export default function MoodTrendsChart({ moodEntries }) {
       <g transform={`translate(${x}, ${y})`}>
         <image
           href={zzIcon}
-          x={-18}
+          x={isMobile ? -60 : -75}  // Much further left
           y={-6}
           width={isMobile ? 8 : 10}
           height={isMobile ? 8 : 10}
           opacity={0.6}
         />
         <text
-          x={-4}
+          x={isMobile ? -48 : -60}  // Much further left
           y={4}
           fontSize={isMobile ? 9 : 10}
           fill="#6B7280"
@@ -154,7 +154,7 @@ export default function MoodTrendsChart({ moodEntries }) {
       <ResponsiveContainer width="100%" height={isMobile ? 260 : 300}>
         <BarChart
           data={chartData}
-          margin={{ top: 20, right: 4, left: 4, bottom: 0 }}
+          margin={{ top: 20, right: 4, left: isMobile ? 0 : 10, bottom: -5 }}
           barCategoryGap="4%"
           barGap={2}
         >
@@ -175,12 +175,12 @@ export default function MoodTrendsChart({ moodEntries }) {
 
           <YAxis
             type="number"
-            domain={[0, 10]}
+            domain={[0, 8]}
             ticks={[1, 2.5, 4, 5.5, 7]}
             tick={<SleepTick />}
             axisLine={false}
             tickLine={false}
-            width={isMobile ? 44 : 56}
+            width={isMobile ? 65 : 80}
           />
 
           <Tooltip

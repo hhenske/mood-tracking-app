@@ -107,7 +107,7 @@ export default function Home({ user, onOpenProfile, onLogout, todayMood, onSubmi
             </div>
 
             {/* Right Chart */}
-                <div className="bg-white rounded-lg p-4 lg:p-6">
+                <div className="bg-white rounded-lg p-4 lg:p-2">
                     <MoodTrendsChart moodEntries={moodData.moodEntries} />
                 </div>
             </div>
