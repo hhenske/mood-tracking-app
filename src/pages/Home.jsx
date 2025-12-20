@@ -6,7 +6,6 @@ import MoodTrendsChart from '../components/charts/MoodTrendsChart'
 import moodData from '../data/data.json'
 import MoodLogModal from '../components/mood/MoodLogModal.jsx';
 import TodayMoodSummary from '../components/mood/TodayMoodSummary.jsx';
-import ProfileCard from '../components/onboarding/ProfileCard.jsx';
 
 
 export default function Home({ user, onOpenProfile, onLogout, todayMood, onSubmitMood }) {

@@ -64,7 +64,6 @@ export default function MoodLogModal({isOpen, onClose, onSubmit}) {
 
         onSubmit(moodLog);
 
-        console.log("Mood Log Submitted:", moodLog);
         setStep(1);
         setSelectedMood(null);
         setSelectedFeelings([]);

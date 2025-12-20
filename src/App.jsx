@@ -43,11 +43,9 @@ function App() {
     setIsAuthenticated(true);
 
     if (mode === "signup") {
-      console.log("Setting needsOnboarding to TRUE")
       setNeedsOnboarding(true);
     } else {
       setNeedsOnboarding(false);
-      console.log("Setting needsOnboarding to FALSE")
     }
   };
 
